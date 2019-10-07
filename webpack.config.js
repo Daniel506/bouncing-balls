@@ -1,10 +1,13 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "production",
-  entry: "./src/index.ts",
+  mode: "development",
+  entry: {
+      index : ["./src/index.ts", "./src/config/configuration.ts", "./src/model/ball-state.ts", "./src/model/velocity.ts"],
+      bounce : "./src/worker/bounce-worker.ts"
+  },
   output: {
-    filename: "index.js"
+    filename: "[name].js"
   },
   devtool: "inline-source-map",
   module: {
