@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-      index : ["./src/index.ts", "./src/config/configuration.ts", "./src/model/ball-state.ts", "./src/model/velocity.ts"],
-      bounce : "./src/worker/bounce-worker.ts"
+      index : ["./src/index.ts"],
+      bounce : "./src/worker/BounceWorker.ts"
   },
   output: {
     filename: "[name].js"

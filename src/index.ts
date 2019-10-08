@@ -1,35 +1,23 @@
-import { Configuration } from "./config/configuration";
+import { Configuration } from "./config/Configuration";
+import { DefaultWorkerFactory } from "./services/impl/DefaultWorkerFactory";
 
-export function main(config : Configuration) {
-  
-  var ballRadius = config.getBallSize() / 2;
+var config = Configuration.getInstance();
+var workerFactory = new DefaultWorkerFactory();
+
+export function main() {
+  initCanvas();
+}
+
+function initCanvas() {
 
   var canvas = <HTMLCanvasElement>document.getElementById('c');
   canvas.height = config.getCanvasHeight();
   canvas.width = config.getCanvasWidth();
-  
-  const rect = canvas.getBoundingClientRect();
-  
   var ctx = canvas.getContext("2d");
-  canvas.addEventListener('mousedown', function(e) {
-    var worker = new Worker('bounce.js');
 
-    let x = e.clientX - rect.left;
-    let y = e.clientY - rect.top;
-    console.log("messageSent " + worker);
-    worker.postMessage([x, y, config.getCanvasHeight() - ballRadius]);
-    
-    worker.addEventListener('message', function(params) {
-      var currentState = params.data[0];
-      var previousState = params.data[1]; 
-      if (ctx != null) {
-        ctx.clearRect(previousState.coordinateX - ballRadius, previousState.coordinateY - ballRadius, config.getBallSize(), config.getBallSize());
-        ctx.fillStyle = currentState.color;
-        ctx.beginPath();
-        ctx.arc(currentState.coordinateX, currentState.coordinateY, ballRadius, 0, Math.PI*2,true);
-        ctx.fill();
-      }
-    }, false);
+  canvas.addEventListener('mousedown', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    workerFactory.createWorker(e.clientX, e.clientY, rect, ctx)
   });
 }
 
@@ -42,5 +30,5 @@ window.onload = function() {
   config.setCanvasWidth(1000);
   config.setFrameRate(20);
 
-  main(config);
+  main();
 }
