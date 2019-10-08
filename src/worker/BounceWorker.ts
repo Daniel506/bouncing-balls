@@ -1,4 +1,4 @@
-import { Configuration } from "../config/configuration";
+import { Configuration } from "../config/Configuration";
 import { BallState } from "../model/BallState";
 import { DefaultBallFactory } from "../services/impl/DefaultBallFactory";
 import { DefaultStateService } from "../services/impl/DefaultStateService";
@@ -39,5 +39,5 @@ function drawBall(state : BallState, bottomEdge:Number) {
     stateService.updateState(state);
     
     let message = workerExchangeFactory.createCallbackExchange(state, previousState);
-    self.postMessage(message, location.origin);
+    self.postMessage(message);
 }
