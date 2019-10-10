@@ -1,10 +1,11 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
 
 module.exports = {
   mode: "development",
   entry: {
       index : ["./src/index.ts"],
-      bounce : "./src/worker/BounceWorker.ts"
+      bounce : ["./src/worker/BallWorker.ts"]
   },
   output: {
     filename: "[name].js"
@@ -28,6 +29,11 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: [".ts"]
-  }
+    extensions: [".ts", ".js"]
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 9000
+  },
+  target: 'webworker'
 };

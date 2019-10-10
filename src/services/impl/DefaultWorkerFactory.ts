@@ -1,10 +1,9 @@
 import { WorkerFactory } from "../WorkerFactory";
-import { DefaultWorkerExchangeFactory } from "../../services/impl/DefaultWorkerExchangeFactory";
-import { Configuration } from "../../config/configuration";
+import { WorkerExchangeFactory } from "../WorkerExchangeFactory";
 
 export class DefaultWorkerFactory implements WorkerFactory {
     
-    private workerExchangeFactory = new DefaultWorkerExchangeFactory();
+    private workerExchangeFactory : WorkerExchangeFactory;
 
     createWorker(clientX : number, clientY : number, canvasRectangle : any, ctx : any) {
         var worker = new Worker('bounce.js');
@@ -19,9 +18,9 @@ export class DefaultWorkerFactory implements WorkerFactory {
           
           if (ctx != null) {
     
-            var config = Configuration.getInstance();
-            var ballRadius = config.getBallSize() / 2;
-            ctx.clearRect(previousState.coordinateX - ballRadius, previousState.coordinateY - ballRadius, config.getBallSize(), config.getBallSize());
+            var config = event.data.config;
+            var ballRadius = config.ballSize / 2;
+            ctx.clearRect(previousState.coordinateX - ballRadius, previousState.coordinateY - ballRadius, config.ballSize, config.ballSize);
             ctx.fillStyle = currentState.color;
             ctx.beginPath();
             ctx.arc(currentState.coordinateX, currentState.coordinateY, ballRadius, 0, Math.PI*2,true);
@@ -30,4 +29,13 @@ export class DefaultWorkerFactory implements WorkerFactory {
         }, false);
 
     }
+
+    setWorkerExchangeFactory(workerExchangeFactory : WorkerExchangeFactory) {
+      this.workerExchangeFactory = workerExchangeFactory;
+    }
+
+    getWorkerExchangeFactory() {
+      return this.workerExchangeFactory;
+    }
+
 }

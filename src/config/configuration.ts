@@ -1,24 +1,13 @@
 
 export class Configuration {
 
-    private static config : Configuration;
     private acceleration : number = 50; 
     private ballAbsorption : number = 0.1;
-    private frameRate : number = 10; 
-    private canvasHeight : number = 500;
+    private frameRate : number = 2; 
+    private canvasHeight : number = 400;
     private canvasWidth : number = 1000;
     private ballSize : number = 20;
     private interval : undefined | number;
-
-    private constructor() { }
-
-    static getInstance() {
-        if (this.config == null) {
-            this.config = new Configuration();
-        }
-
-        return this.config;
-    }
 
      setAcceleration(acceleration:number) {
         return this.acceleration = acceleration;
