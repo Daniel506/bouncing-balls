@@ -45,6 +45,7 @@ export class ApplicationStarter {
     this.getConfiguration().setCanvasWidth(+config.canvasWidth || 1000);
     this.getConfiguration().setFrameRate(+config.frameRate || 20);
   }
+  
   setConfiguration(config : Configuration) {
       this.config = config;
   }

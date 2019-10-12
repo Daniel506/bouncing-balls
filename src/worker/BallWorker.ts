@@ -1,7 +1,8 @@
 import { Registry } from "../config/Registry";
-import { BallState } from "../model/BallState";
 
-self.addEventListener('message', function(event) {
+self.addEventListener('message', event => onWindowWorkerMessage(event), false);
+
+export function onWindowWorkerMessage(event) {
     console.log("messageReceived");
     
     if (event.data.config != undefined) {
@@ -22,4 +23,4 @@ self.addEventListener('message', function(event) {
             }    
         }, 10);
     }
-}, false);
+}
