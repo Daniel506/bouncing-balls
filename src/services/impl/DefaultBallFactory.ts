@@ -1,6 +1,7 @@
 import { BallState } from "../../model/BallState";
 import { Velocity } from "../../model/Velocity";
 import { BallFactory } from "../BallFactory";
+import { SequenceIdGenerator } from "../../utils/SequenceIdGenerator";
 
 export class DefaultBallFactory implements BallFactory {
     
@@ -11,7 +12,8 @@ export class DefaultBallFactory implements BallFactory {
         let velocity = this.generateVelocity(randomVelocity, randomAngle);
         let color = this.generateColor(coordinateX, coordinateY, randomAngle); 
     
-        return new BallState(coordinateX, coordinateY, color, velocity, randomAngle);
+        const id = SequenceIdGenerator.getInstance().getNextSequenceId();
+        return new BallState(id, coordinateX, coordinateY, color, velocity, randomAngle);
     }
 
     generateVelocity(randomVelocity: number, randomAngle: number) {

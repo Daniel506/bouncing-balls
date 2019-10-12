@@ -1,18 +1,25 @@
-import { Velocity } from "./velocity";
+import { Velocity } from "./Velocity";
 
 export class BallState {
+
+    private id : number;
     private coordinateX : number;
     private coordinateY : number;
     private color : string;
     private velocity : Velocity;
     private angle : number;
 
-    constructor(coordinateX : number, coordinateY : number, color : string, velocity : Velocity, angle : number) {
+    constructor(id : number, coordinateX : number, coordinateY : number, color : string, velocity : Velocity, angle : number) {
+        this.id = id;
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
         this.color = color;
         this.velocity = velocity;
         this.angle = angle;
+    }
+
+    setId(id : number) {
+        this.id = id;
     }
 
     setCoordinateX(coordinateX: number) {
@@ -33,6 +40,10 @@ export class BallState {
 
     setAngle(angle : number) {
         this.angle = angle;
+    }
+
+    getId() {
+        return this.id;
     }
 
     getCoordinateX() : number {

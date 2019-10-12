@@ -3,6 +3,7 @@ import { BallState } from "../../model/BallState";
 import { Configuration } from "../../config/Configuration";
 import { BallFactory } from "../BallFactory";
 import { Registry } from "../../config/Registry";
+import { SequenceIdGenerator } from "../../utils/SequenceIdGenerator";
 
 export class DefaultWorkerExchangeFactory implements WorkerExchangeFactory {
 
@@ -16,11 +17,21 @@ export class DefaultWorkerExchangeFactory implements WorkerExchangeFactory {
 
         const bottomEdge = this.getConfiguration().getCanvasHeight() - this.getConfiguration().getBallSize() / 2;
         
-        return {x : x, y : y, bottomEdge : bottomEdge, config : this.getConfiguration(), context : Registry.getContext()};
+        return { 
+            x : x, 
+            y : y, 
+            bottomEdge : bottomEdge, 
+            config : this.getConfiguration(),
+            id: SequenceIdGenerator.getInstance().getNextSequenceId()
+        };
     }
 
     createCallbackExchange(currentState : BallState, previousState : BallState) {
-        return {currentState : currentState, previousState : previousState, config : this.getConfiguration()};
+        return {
+            currentState : currentState, 
+            previousState : previousState, 
+            config : this.getConfiguration()
+        };
     }
 
     setConfiguration(config : Configuration) {

@@ -1,9 +1,9 @@
 import { Registry } from "../config/Registry";
+import { SequenceIdGenerator } from "../utils/SequenceIdGenerator";
 
 self.addEventListener('message', event => onWindowWorkerMessage(event), false);
 
 export function onWindowWorkerMessage(event) {
-    console.log("messageReceived");
     
     if (event.data.config != undefined) {
         Registry.startContext();
@@ -11,8 +11,11 @@ export function onWindowWorkerMessage(event) {
             const starter = Registry.getContext().get("applicationStarter"); 
             starter.copyConfig(event.data.config);
 
+            SequenceIdGenerator.getInstance().setSequence(event.data.id);
+            
             const ballFactory = Registry.getContext().get("ballFactory");
             const state = ballFactory.generateState(event.data.x, event.data.y);
+            console.log("creating a new ball with id: " + state.getId());
             let config = event.data.config;
             if ( config.interval == undefined) {
                 

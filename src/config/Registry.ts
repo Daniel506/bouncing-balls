@@ -5,6 +5,7 @@ import { DefaultWorkerFactory } from "../services/impl/DefaultWorkerFactory";
 import { DefaultBounceDrawingService } from "../services/impl/DefaultBounceDrawingService";
 import { Configuration } from "./Configuration";
 import { ApplicationStarter } from "../starter/ApplicationStarter";
+import { SequenceIdGenerator } from "../utils/SequenceIdGenerator";
 
 export class Registry {
 
@@ -22,7 +23,9 @@ export class Registry {
     }
     
     static startContext() {
+        console.log("Starting new application context ...")
         this.getInstance();
+        console.log("Application context startup is complete ...")
     }
     
     private static init() {
@@ -81,4 +84,5 @@ export class Registry {
         bounceDrawingService.setWorkerExchangeFactory(this.context.get("workerExchangeFactory"));
         return bounceDrawingService;
     }
+
 }
