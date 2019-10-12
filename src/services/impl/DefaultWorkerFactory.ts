@@ -9,7 +9,6 @@ export class DefaultWorkerFactory implements WorkerFactory {
     createWorker(clientX : number, clientY : number, canvasRectangle : any, ctx : any) {
         var worker = new Worker(this.getWorkerUrl());
 
-        console.log("messageSent " + worker);
         let message = this.workerExchangeFactory.createWorkerExchange(clientX, clientY, canvasRectangle);
         worker.postMessage(message);
         
