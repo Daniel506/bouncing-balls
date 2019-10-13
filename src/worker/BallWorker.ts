@@ -25,7 +25,11 @@ export function onWindowWorkerMessage(event) {
             
             const ballFactory = Registry.getContext().get("ballFactory");
             const state = ballFactory.generateState(event.data.x, event.data.y);
-            console.log("creating a new ball with id: " + state.getId());
+            
+            console.log("creating a new ball with id: " + state.getId() + 
+                        " velocity: " + state.getVelocity().getCurrentVelocity() + 
+                        " angle: " + state.getAngle());
+
             let config = event.data.config;
             if ( config.interval == undefined) {
                 

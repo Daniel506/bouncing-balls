@@ -13,6 +13,14 @@ export class Velocity {
         this.velocityY = velocityY;
     }
 
+    clone() {
+        return new Velocity(
+            this.currentVelocity, 
+            this.velocityX, 
+            this.velocityY 
+        );
+    }
+
     setCurrentVelocity(currentVelocity : number) {
         this.currentVelocity = currentVelocity;
     }

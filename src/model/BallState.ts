@@ -22,6 +22,17 @@ export class BallState {
         this.angle = angle;
     }
 
+    clone() {
+        return new BallState(
+            this.id,
+            this.coordinateX,
+            this.coordinateY,
+            this.color,
+            this.velocity.clone(),
+            this.angle
+        );
+    }
+
     setId(id : number) {
         this.id = id;
     }

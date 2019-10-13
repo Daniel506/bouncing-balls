@@ -25,7 +25,7 @@ export class DefaultWorkerFactory implements WorkerFactory {
 
         var config = event.data.config;
         var ballRadius = config.ballSize / 2;
-        ctx.clearRect(previousState.coordinateX - ballRadius, previousState.coordinateY - ballRadius, config.ballSize, config.ballSize);
+        ctx.clearRect(previousState.coordinateX - ballRadius -2, previousState.coordinateY - ballRadius-2, config.ballSize + 3, config.ballSize + 3);
         ctx.fillStyle = currentState.color;
         ctx.beginPath();
         ctx.arc(currentState.coordinateX, currentState.coordinateY, ballRadius, 0, Math.PI*2,true);
