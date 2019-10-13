@@ -1,27 +1,27 @@
 import { WorkerExchangeFactory } from "../WorkerExchangeFactory";
 import { BallState } from "../../model/BallState";
-import { Configuration } from "../../config/Configuration";
 import { BallFactory } from "../BallFactory";
-import { Registry } from "../../config/Registry";
 import { SequenceIdGenerator } from "../../utils/SequenceIdGenerator";
+import { ConfigurationService } from "../ConfigurationService";
 
 export class DefaultWorkerExchangeFactory implements WorkerExchangeFactory {
 
-    private config : Configuration;
+    private configurationService : ConfigurationService;
     private ballFactory : BallFactory; 
 
     createWorkerExchange(clientX : number, clientY : number, canvasRectangle : any) {
         
         let x = clientX - canvasRectangle.left;
         let y = clientY - canvasRectangle.top;
+        let config = this.getConfigurationService().getConfiguration();
 
-        const bottomEdge = this.getConfiguration().getCanvasHeight() - this.getConfiguration().getBallSize() / 2;
+        const bottomEdge = config.getCanvasHeight() - config.getBallSize() / 2;
         
         return { 
             x : x, 
             y : y, 
             bottomEdge : bottomEdge, 
-            config : this.getConfiguration(),
+            config : this.getConfigurationService().getConfiguration(),
             id: SequenceIdGenerator.getInstance().getNextSequenceId()
         };
     }
@@ -30,16 +30,16 @@ export class DefaultWorkerExchangeFactory implements WorkerExchangeFactory {
         return {
             currentState : currentState, 
             previousState : previousState, 
-            config : this.getConfiguration()
+            config : this.getConfigurationService().getConfiguration()
         };
     }
 
-    setConfiguration(config : Configuration) {
-        this.config = config;
+    setConfigurationService(configurationService : ConfigurationService) {
+        this.configurationService = configurationService;
     }
 
-    getConfiguration() {
-        return this.config;
+    getConfigurationService() {
+        return this.configurationService;
     }
 
     setBallFactory(ballFactory : BallFactory) {

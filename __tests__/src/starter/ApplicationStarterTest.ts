@@ -1,7 +1,7 @@
 import { DefaultWorkerFactory } from "../../../src/services/impl/DefaultWorkerFactory";
 import { Registry } from "../../../src/config/Registry";
 import { ApplicationStarter } from "../../../src/starter/ApplicationStarter";
-import { Configuration } from "../../../src/config/Configuration";
+import { Configuration } from "../../../src/model/Configuration";
 import 'jest-canvas-mock';
 
 const createWorker = DefaultWorkerFactory.prototype.createWorker = jest.fn();
@@ -19,7 +19,7 @@ describe("Application starter tests", () => {
         const applicationStarter = <ApplicationStarter>context.get("applicationStarter");
         applicationStarter.start();
 
-        let configuration = <Configuration>context.get("configuration");
+        let configuration = context.get("configurationService").getConfiguration();
         expect( configuration.getAcceleration() ).toBe( 100 );
         expect( configuration.getBallAbsorption() ).toBe( 0.5 );
         expect( configuration.getBallSize() ).toBe( 10 );
@@ -37,31 +37,6 @@ describe("Application starter tests", () => {
         applicationStarter.startWorker({clientX: 10, clientY : 10});
 
         expect( workerFactorySpy ).toBeCalled();
-    });
-
-    test('copy config', () => {
-        const context = Registry.getContext();
-
-        const config = {
-            "acceleration": 100,
-            "ballAbsorption": 0.5,
-            "frameRate": 5,
-            "ballSize": 10,
-            "canvasHeight": 200,
-            "canvasWidth": 500
-        };
-
-        const applicationStarter = <ApplicationStarter>context.get("applicationStarter");
-        applicationStarter.copyConfig(config);
-
-        let configuration = <Configuration>context.get("configuration");
-        expect( configuration.getAcceleration() ).toBe( 100 );
-        expect( configuration.getBallAbsorption() ).toBe( 0.5 );
-        expect( configuration.getBallSize() ).toBe( 10 );
-        expect( configuration.getCanvasHeight() ).toBe( 200 );
-        expect( configuration.getCanvasWidth() ).toBe( 500 );
-        expect( configuration.getFrameRate() ).toBe( 5 );
-        expect( configuration.getInterval() ).toBe( undefined );
     });
 
     function initView() {

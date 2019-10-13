@@ -1,10 +1,4 @@
-import { DefaultBallFactory } from "../services/impl/DefaultBallFactory";
-import { DefaultStateService } from "../services/impl/DefaultStateService";
-import { DefaultWorkerExchangeFactory } from "../services/impl/DefaultWorkerExchangeFactory";
-import { DefaultWorkerFactory } from "../services/impl/DefaultWorkerFactory";
-import { DefaultBounceDrawingService } from "../services/impl/DefaultBounceDrawingService";
-import { Configuration } from "./Configuration";
-import { ApplicationStarter } from "../starter/ApplicationStarter";
+import { ContextConfiguration } from "./ContextConfiguration";
 
 /**
  * Container class which implements simple IoC. It contains a context map which resolves all the dependency injections.
@@ -15,12 +9,14 @@ export class Registry {
 
     private static registry : Registry;
     private static context : Map<String ,any>;
+    private static config : ContextConfiguration;
 
     private constructor() { }
 
     static getInstance() {
         if (this.registry == null) {
             this.context = new Map();
+            this.config = new ContextConfiguration();
             this.init();
         }
         return this.registry;
@@ -33,60 +29,17 @@ export class Registry {
     }
     
     private static init() {
-        this.context.set("configuration", this.getConfiguration());
-        this.context.set("ballFactory", this.getBallFactory());
-        this.context.set("stateService", this.getStateService());
-        this.context.set("workerExchangeFactory", this.getWorkerExchangeFactory());
-        this.context.set("workerFactory", this.getWorkerFactory());
-        this.context.set("bounceDrawingService", this.getBounceDrawingService());
-        this.context.set("applicationStarter", this.getApplicationStarter());
+        this.context.set("configurationService", this.config.getConfigurationService());
+        this.context.set("configLoader", this.config.getConfigLoader());
+        this.context.set("ballFactory", this.config.getBallFactory());
+        this.context.set("stateService", this.config.getStateService());
+        this.context.set("workerExchangeFactory", this.config.getWorkerExchangeFactory());
+        this.context.set("workerFactory", this.config.getWorkerFactory());
+        this.context.set("bounceDrawingService", this.config.getBounceDrawingService());
+        this.context.set("applicationStarter", this.config.getApplicationStarter());
     }
 
     static getContext() {
         return this.context;
     }
-
-    static getConfiguration() {
-        const config = new Configuration();
-        return config;
-    }
-
-    static getBallFactory() {
-        return new DefaultBallFactory();
-    }
-
-    static getStateService() {
-        const defaultStateService = new DefaultStateService();
-        defaultStateService.setConfiguration(this.context.get("configuration"));
-        return defaultStateService;
-    }
-
-    static getWorkerExchangeFactory() {
-        const defaultWorkerExchangeFactory = new DefaultWorkerExchangeFactory();
-        defaultWorkerExchangeFactory.setConfiguration(this.context.get("configuration"));
-        defaultWorkerExchangeFactory.setBallFactory(this.context.get("ballFactory"));
-        return defaultWorkerExchangeFactory;
-    }
-
-    static getWorkerFactory () {
-        const defaultWorkerFactory = new DefaultWorkerFactory();
-        defaultWorkerFactory.setWorkerExchangeFactory(this.context.get("workerExchangeFactory"));
-        return defaultWorkerFactory;
-    }
-
-    static getApplicationStarter() {
-        const applicationStarter = new ApplicationStarter();
-        applicationStarter.setWorkerFactory(this.context.get("workerFactory"));
-        applicationStarter.setConfiguration(this.context.get("configuration"));
-        return applicationStarter;
-    }
-
-    static getBounceDrawingService() {
-        const bounceDrawingService = new DefaultBounceDrawingService();
-        bounceDrawingService.setConfiguration(this.context.get("configuration"));
-        bounceDrawingService.setStateService(this.context.get("stateService"));
-        bounceDrawingService.setWorkerExchangeFactory(this.context.get("workerExchangeFactory"));
-        return bounceDrawingService;
-    }
-
 }

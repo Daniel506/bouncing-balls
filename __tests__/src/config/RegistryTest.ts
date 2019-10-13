@@ -1,5 +1,5 @@
 import { Registry } from "../../../src/config/Registry";
-import { Configuration } from "../../../src/config/Configuration";
+import { DefaultConfgurationService } from "../../../src/services/impl/DefaultConfigurationService";
 import { ApplicationStarter } from "../../../src/starter/ApplicationStarter";
 import { DefaultBounceDrawingService } from "../../../src/services/impl/DefaultBounceDrawingService";
 import { DefaultWorkerFactory } from "../../../src/services/impl/DefaultWorkerFactory";
@@ -18,12 +18,10 @@ describe("Registry tests", () => {
         expect( context.get("workerExchangeFactory") ).toBeInstanceOf( DefaultWorkerExchangeFactory )
         expect( context.get("workerFactory") ).toBeInstanceOf( DefaultWorkerFactory )
         expect( context.get("bounceDrawingService") ).toBeInstanceOf( DefaultBounceDrawingService )
-        expect( context.get("applicationStarter") ).toBeInstanceOf( ApplicationStarter )
-
+        expect( context.get("applicationStarter") ).toBeInstanceOf( ApplicationStarter )      
+        expect( context.get("configurationService") ).toBeInstanceOf( DefaultConfgurationService )
         
-        expect( context.get("configuration") ).toBeInstanceOf( Configuration )
-        
-        let configuration = <Configuration>context.get("configuration");
+        let configuration = context.get("configurationService").getConfiguration();
         expect( configuration.getAcceleration() ).toBe( 50 );
         expect( configuration.getBallAbsorption() ).toBe( 0.1 );
         expect( configuration.getBallSize() ).toBe( 20 );

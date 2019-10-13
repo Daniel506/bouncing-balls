@@ -19,7 +19,7 @@ export function onWindowWorkerMessage(event) {
         Registry.startContext();
         setTimeout(() => {
             const starter = Registry.getContext().get("applicationStarter"); 
-            starter.copyConfig(event.data.config);
+            starter.getConfigLoader().copyConfig(event.data.config);
 
             SequenceIdGenerator.getInstance().setSequence(event.data.id);
             

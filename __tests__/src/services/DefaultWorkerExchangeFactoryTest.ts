@@ -1,9 +1,6 @@
 import { Registry } from "../../../src/config/Registry";
-import { Velocity } from "../../../src/model/Velocity";
 import { mockRandomForEach } from 'jest-mock-random';
-import { StateService } from "../../../src/services/StateService";
 import { DefaultBallFactory } from "../../../src/services/impl/DefaultBallFactory";
-import { DefaultStateService } from "../../../src/services/impl/DefaultStateService";
 import { DefaultWorkerExchangeFactory } from "../../../src/services/impl/DefaultWorkerExchangeFactory";
 
 describe("Default worker exchange factory tests", () => {
@@ -24,7 +21,7 @@ describe("Default worker exchange factory tests", () => {
         expect( exchange.x ).toBe( 8 );
         expect( exchange.y ).toBe( 8 );
         expect( exchange.bottomEdge ).toBe( 390 );
-        expect( exchange.config ).toBe( workerExchangeFactory.getConfiguration() );
+        expect( exchange.config ).toBe( workerExchangeFactory.getConfigurationService().getConfiguration() );
     });
 
     test('create callback exchange', () => {
@@ -40,6 +37,6 @@ describe("Default worker exchange factory tests", () => {
     
         expect( exchange.currentState ).toBe( state );
         expect( exchange.previousState ).toBe( previousState );
-        expect( exchange.config ).toBe( workerExchangeFactory.getConfiguration() );
+        expect( exchange.config ).toBe( workerExchangeFactory.getConfigurationService().getConfiguration() );
     });
 });

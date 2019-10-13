@@ -1,22 +1,25 @@
-import { Configuration } from "../../config/Configuration";
-import { BallState } from "../../model/BallState";
+import { Configuration } from "../../model/Configuration";
 import { StateService } from "../StateService";
 import { WorkerExchangeFactory } from "../WorkerExchangeFactory";
+import { ConfigurationService } from "../ConfigurationService";
 
 export class DefaultBounceDrawingService {
 
     private stateService : StateService;
     private workerExchangeFactory : WorkerExchangeFactory;
-    private config : Configuration;
+    private configurationService : ConfigurationService;
 
     drawBall(state : any, bottomEdge:Number) {
         
         let currentVelocity = state.velocity.currentVelocity;
         if(state.getCoordinateY() >= bottomEdge && currentVelocity > 0) {
             this.getStateService().resetState(state);
+            
             if(currentVelocity > -0.1 && currentVelocity < 0.1) {
-                clearInterval(this.getConfiguration().getInterval());
-                this.getConfiguration().setInterval(undefined);
+                const config = this.getConfigurationService().getConfiguration();
+                
+                clearInterval(config.getInterval());
+                config.setInterval(undefined);
                 console.log("Ball with id: " + state.getId() + " stopped.");
                 self.close();
             }
@@ -37,8 +40,8 @@ export class DefaultBounceDrawingService {
         this.workerExchangeFactory = workerExchangeFactory;
     }
 
-    setConfiguration(config : Configuration) {
-        this.config = config;
+    setConfigurationService(configurationService : ConfigurationService) {
+        this.configurationService = configurationService;
     }
 
     getStateService() {
@@ -49,7 +52,7 @@ export class DefaultBounceDrawingService {
         return this.workerExchangeFactory;
     }
 
-    getConfiguration() {
-        return this.config;
+    getConfigurationService() {
+        return this.configurationService;
     }
 }

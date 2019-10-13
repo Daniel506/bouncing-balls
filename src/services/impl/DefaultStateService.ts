@@ -1,13 +1,13 @@
 import { StateService } from "../StateService";
 import { BallState } from "../../model/BallState";
-import { Configuration } from "../../config/Configuration";
+import { ConfigurationService } from "../ConfigurationService";
 
 export class DefaultStateService implements StateService {
     
-    private config : Configuration;
+    private configurationService : ConfigurationService;
 
     updateState(state : BallState) {
-        let config = this.getConfiguration();
+        let config = this.getConfigurationService().getConfiguration();
         let time = config.getFrameRate()/1000;
         const velocity = state.getVelocity();
 
@@ -17,7 +17,7 @@ export class DefaultStateService implements StateService {
     }
 
     resetState(state : BallState) {
-        let config = this.getConfiguration();
+        let config = this.getConfigurationService().getConfiguration();
         const velocity = state.getVelocity();
 
         let currentVelocity = velocity.getCurrentVelocity();
@@ -26,11 +26,11 @@ export class DefaultStateService implements StateService {
         velocity.setVelocityY(currentVelocity * Math.sin(state.getAngle()) * -1);
     }
 
-    setConfiguration(config : Configuration) {
-        this.config = config;
+    setConfigurationService(configurationService : ConfigurationService) {
+        this.configurationService = configurationService;
     }
 
-    getConfiguration() {
-        return this.config;
+    getConfigurationService() {
+        return this.configurationService;
     }
 }
