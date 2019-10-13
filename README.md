@@ -4,7 +4,7 @@ This is a bouncing ball application using webpack and typescript.
 
 # Prerequisites
 
-In order to build and run the application one needs to have yarn installed on classpath.
+In order to build and run the application one needs to have yarn installed on the system path.
 How to install yarn can be found here https://yarnpkg.com/lang/en/docs/install/#windows-stable.
 
 # Build and Run the application
