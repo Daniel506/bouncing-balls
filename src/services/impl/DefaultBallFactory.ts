@@ -7,7 +7,7 @@ export class DefaultBallFactory implements BallFactory {
     
     generateState(coordinateX : number, coordinateY : number) {
         const randomAngle = Math.random() * Math.PI / 2;
-        const randomVelocity = Math.random() * 100;
+        const randomVelocity = 100 + Math.random() * 50;
         
         let velocity = this.generateVelocity(randomVelocity, randomAngle);
         let color = this.generateColor(coordinateX, coordinateY, randomAngle); 
