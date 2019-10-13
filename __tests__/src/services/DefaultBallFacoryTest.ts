@@ -24,9 +24,9 @@ describe("Default ball factory tests", () => {
         expect( state.getColor() ).toBe( "rgb(10,10," + angleRadians + ")" );
 
         const velocity = <Velocity>state.getVelocity();
-        expect( velocity.getCurrentVelocity() ).toBe( 50 );
-        expect( velocity.getVelocityX() ).toBe( 50 * Math.cos(angleRadians) );
-        expect( velocity.getVelocityY() ).toBe( -50 * Math.sin(angleRadians) );
+        expect( velocity.getCurrentVelocity() ).toBe( 125 );
+        expect( velocity.getVelocityX() ).toBe( 125 * Math.cos(angleRadians) );
+        expect( velocity.getVelocityY() ).toBe( -125 * Math.sin(angleRadians) );
 
     });
 });
