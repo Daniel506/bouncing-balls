@@ -5,8 +5,12 @@ import { DefaultWorkerFactory } from "../services/impl/DefaultWorkerFactory";
 import { DefaultBounceDrawingService } from "../services/impl/DefaultBounceDrawingService";
 import { Configuration } from "./Configuration";
 import { ApplicationStarter } from "../starter/ApplicationStarter";
-import { SequenceIdGenerator } from "../utils/SequenceIdGenerator";
 
+/**
+ * Container class which implements simple IoC. It contains a context map which resolves all the dependency injections.
+ * The registry is responsible to resolve all the dependencies and correctly start the application context.
+ * The implementation only supports configuration of singletons that can interoperably reused.
+ */
 export class Registry {
 
     private static registry : Registry;

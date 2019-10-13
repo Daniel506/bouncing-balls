@@ -1,3 +1,7 @@
+/**
+ * Sequence generator used to identify the balls on the canvas. It starts from 0 on application a 
+ * startup and sequentially increments the id whenever new ball is instantiated.
+ */
 export class SequenceIdGenerator {
 
     private static instance : SequenceIdGenerator;

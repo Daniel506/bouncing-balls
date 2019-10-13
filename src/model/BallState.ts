@@ -1,5 +1,9 @@
 import { Velocity } from "./Velocity";
 
+/**
+ * Defines the ball state. For every ball on the canvas there is a unique state at every moment. The state is defined by the 
+ * current coordinates of the ball on the canvas, its color, velocity and the angle.
+ */
 export class BallState {
 
     private id : number;

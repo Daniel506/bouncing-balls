@@ -2,6 +2,9 @@ import { Configuration } from "../config/Configuration";
 import { Registry } from "../config/Registry";
 import { WorkerFactory } from "../services/WorkerFactory";
 
+/**
+ * Helper class to simplify the context startup, prepare the canvas for drawing and initialize the click event. 
+ */
 export class ApplicationStarter {
 
     private config : Configuration;
